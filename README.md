@@ -5,3 +5,7 @@ Some string transformation functions for Elixir. Heavily inspired by ActiveSuppo
 ## State
 
 **WIP!**
+
+## License
+
+See [LICENSE](LICENSE) (MIT)
