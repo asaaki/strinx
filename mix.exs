@@ -7,7 +7,7 @@ defmodule Strinx.Mixfile do
 
   def project do
     [
-      app: :fnv,
+      app: :strinx,
       version: @version,
       elixir: "~> 1.2",
       deps: deps,
