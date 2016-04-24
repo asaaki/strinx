@@ -1,58 +1,59 @@
 defmodule Strinx.Mixfile do
   use Mix.Project
 
+  @version "0.1.0"
+  @project_url "https://github.com/asaaki/strinx.ex"
+  @docs_url "http://hexdocs.pm/strinx"
+
   def project do
     [
-      app:           :strinx,
-      version:       "0.1.0",
-      elixir:        "~> 1.0",
-      deps:          deps,
-      package:       package,
-      description:   "Some string transformation functions for Elixir. Heavily inspired by ActiveSupport's String extensions (Ruby).",
-      name:          "strinx",
-      source_url:    "https://github.com/asaaki/strinx.ex",
-      homepage_url:  "http://hexdocs.pm/strinx",
-      docs:          &docs/0,
+      app: :fnv,
+      version: @version,
+      elixir: "~> 1.2",
+      deps: deps,
+      package: package,
+      description: description,
+      source_url: @project_url,
+      homepage_url: @docs_url,
+      docs: &docs/0,
       test_coverage: [tool: ExCoveralls]
-   ]
+    ]
   end
 
   def application, do: []
 
+  defp description,
+    do: "Some string transformation functions for Elixir. Heavily inspired by ActiveSupport's String extensions (Ruby)."
+
   defp package do
     [
-      contributors: ["Christoph Grabo"],
-      licenses:     ["MIT"],
+      maintainers: ["Christoph Grabo"],
+      licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/asaaki/strinx.ex",
-        "Issues" => "https://github.com/asaaki/strinx.ex/issues",
-        "Docs"   => "http://hexdocs.pm/strinx/"
+        "GitHub" => @project_url,
+        "Docs" => "#{@docs_url}/#{@version}/"
       },
-      files: [
-        "lib",
-        "LICENSE",
-        "mix.exs",
-        "README.md",
-        "src"
-      ]
+      files: package_files
     ]
   end
 
+  defp package_files,
+    do: ~w(lib mix.exs README.md LICENSE)
+
   defp docs do
-    {ref, 0} = System.cmd("git", ["rev-parse", "--verify", "--quiet", "HEAD"])
     [
-      source_ref: ref,
-      readme:     "README.md",
-      main:       "README"
+      extras: ["README.md"], main: "readme",
+      source_ref: "v#{@version}", source_url: @project_url
     ]
   end
 
   defp deps do
     [
-      { :excoveralls, "~> 0.3", only: [:dev, :test] },
-      { :ex_doc,      "~> 0.7", only: :docs },
-      { :earmark,     "~> 0.1", only: :docs },
-      { :inch_ex,     "~> 0.2", only: :docs }
+      {:credo, "~> 0.3", only: [:lint, :ci]},
+      {:ex_doc, "~> 0.11", only: [:docs, :ci]},
+      {:cmark, "~> 0.6", only: [:docs, :ci]},
+      {:inch_ex, "~> 0.5", only: [:docs, :ci]},
+      {:excoveralls, "~> 0.5", only: [:ci]},
     ]
   end
 end
