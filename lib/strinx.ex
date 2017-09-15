@@ -11,7 +11,7 @@ defmodule Strinx do
 
   def camelize("", _first_letter_flag), do: ""
   def camelize(input, first_letter_flag) do
-    to_upper = first_letter_flag != :lower
+    to_upper = first_letter_flag
     camelize(input, "", to_upper)
   end
 
@@ -20,7 +20,7 @@ defmodule Strinx do
     camelize(rest, output, true)
   end
   defp camelize(<< char :: utf8, rest :: binary >>, output, to_upper) do
-    char = if to_upper, do: String.upcase(<< char :: utf8 >>), else: << char :: utf8 >>
+    char = if to_upper == :upper, do: String.upcase(<< char :: utf8 >>), else: String.downcase(<< char :: utf8 >>)
     camelize(rest, output <> char, false)
   end
 
