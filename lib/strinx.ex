@@ -5,7 +5,7 @@ defmodule Strinx do
   Heavily inspired by ActiveSupport's String extensions (Ruby).
   """
 
-  alias String.Unicode
+  alias String.Casing
 
   @doc "`foo_bar` to `FooBar`"
   def camelcase(input),
@@ -65,10 +65,10 @@ defmodule Strinx do
   defp maybe_underscore(true, char),
     do: char
   defp maybe_underscore(false, char),
-    do: "_" <> Unicode.downcase(char)
+    do: "_" <> Casing.downcase(char)
 
   defp noncapital?(char),
-    do: Unicode.downcase(char) == char
+    do: Casing.downcase(char) == char
 
   defp strip_leading_underscore(<< "_", output :: binary >>),
     do: output
